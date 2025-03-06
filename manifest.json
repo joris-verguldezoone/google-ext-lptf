@@ -9,5 +9,13 @@
     },
     "background": {
         "service_worker": "background.js"
-    }
+    },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "css": ["site.css"],
+          "js": ["popup.js"],
+          "html":["popup.html"]
+        }
+      ]
 }
