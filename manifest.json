@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Changer Couleur",
+    "version": "1.0",
+    "description": "Change la couleur de la div après component_sidebar",
+    "permissions": ["activeTab", "scripting"],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}
