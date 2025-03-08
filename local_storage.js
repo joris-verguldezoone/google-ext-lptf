@@ -57,7 +57,11 @@ function applyStoredTheme() {
             if (theme[key]) {
                 let cssVar = "--" + key.replace("custom-", "");
                 document.documentElement.style.setProperty(cssVar, theme[key]);
-                document.querySelector("#"+key).style.backgroundColor = theme[key]
+
+                if (document.querySelector("#"+key) ){
+                    document.querySelector("#"+key).style.backgroundColor = theme[key]
+
+                }
             }
         }
     });
