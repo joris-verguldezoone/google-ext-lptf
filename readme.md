@@ -15,7 +15,6 @@ Cette documentation présente une vue d'ensemble de l'organisation et du fonctio
 
 ## TODO
 
-- [ ] Générer une case à cocher pour activer/désactiver les couleurs custom
 - [ ] Intégrer le localStorage pour :
   - Sauvegarder les custom colors
   - Permettre l'exportation et l'importation des custom colors
