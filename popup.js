@@ -54,10 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 let toto = this.id.toString()
 
                 if (this.id.toString().startsWith("custom-")) { 
-                    /* 
-                        passe par l'id pour mettre a jour currentCustomColor.type lors de la selection de la couleur
-                        palie au manque de state
-                    */
+            
                     activeButtonId = this.id.toString().substring(7);
                 }
                 else{
@@ -98,11 +95,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     console.warn("Aucun bouton selected");
                     return;
                 }
-    
+                
                 const computedStyles = window.getComputedStyle(currentButton);
                 currentCustomColor.value = computedStyles.backgroundColor;
-                currentCustomColor.type = activeButtonId; 
-    
+                currentCustomColor.type = activeButtonId;
+
+                // experimental ajout couleur au selecot mais y'a un delais a regler
+                let activeSelector= document.getElementById('custom-'+activeButtonId)
+                activeSelector.classList = ""
+                activeSelector.classList = "neu-button-active "+ currentClass
+                
+
                 console.log("currentCustomColor :", currentCustomColor);
     
                 chrome.runtime.sendMessage({
