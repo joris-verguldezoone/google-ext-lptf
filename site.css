@@ -1,3 +1,21 @@
+.neu-button-inactive {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow:  29px 29px 59px #bebebe,
+                -29px -29px 59px #ffffff;
+}
+.neu-button-active {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 29px 29px 59px #bebebe,
+                inset -29px -29px 59px #ffffff;
+}
+
+
 #popup{
     width: 500px;
     height: 500px;

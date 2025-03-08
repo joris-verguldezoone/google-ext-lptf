@@ -1,139 +1,144 @@
-// TODO: Refaire les colors en style pure avec les #color chargés a la place des classes
-// TODO: Trigger le changement de background sans le bouton de validation pour fludifier la sélection
-
+// css pack
 const colors = [
-    "turquoise" 
-    ,"green-sea"
-    ,"emerald" 
-    ,"nephritis" 
-    ,"peter-river"
-    ,"belize-hole"
-    ,"amethyst" 
-    ,"wisteria" 
-    ,"wet-asphalt" 
-    ,"midnight-blue"  
-    ,"sunflower" 
-    ,"orange"  
-    ,"carrot" 
-    ,"pumpkin" 
-    ,"alizarin" 
-    ,"pomegranate" 
-    ,"clouds" 
-    ,"silver" 
-    ,"concrete" 
-    ,"asbestos" 
+    "turquoise", "green-sea", "emerald", "nephritis", "peter-river", 
+    "belize-hole", "amethyst", "wisteria", "wet-asphalt", "midnight-blue", 
+    "sunflower", "orange", "carrot", "pumpkin", "alizarin", "pomegranate", 
+    "clouds", "silver", "concrete", "asbestos"
+];
+// css pack
+const colorsIntensity = ["", "-50", "-100", "-200", "-300", "-400", "-500", "-600", "-700", "-800", "-900"];
+let i = 1;
+
+// customButton de popupHtml
+const customLptfColors = [
+    "custom-primary",
+    "custom-secondary",
+    "custom-tertiary",
+    "custom-fourth",
+    "custom-textColor",
+    "custom-sideBarBackgroundColor",
+    "custom-sideBarIconAndTextColor",
+    "custom-success",
+    "custom-error",
+    "custom-active",
+    "custom-inactive"
 ]
 
-const colorsIntensity = ["","-50",'-100',"-200","-300","-400","-500","-600","-700","-800","-900"] 
+document.addEventListener("DOMContentLoaded", async () => {
 
-console.log("coucou")
+    // tous les selecteurs correspondant aux custom ids 
+    const buttons = customLptfColors.map(id => document.getElementById(id)).filter(btn => btn);
+    let currentCustomColor = { type: "", value: "" };
+    let activeButtonId = ""; 
+    
+    buttons.forEach(button => {
+        button.addEventListener("click", function (event) {
+            console.log("Bouton cliqué :", event.target.id);
+    
+            // reset le bouton actif
+            if (this.classList.contains("neu-button-active")) {
+                this.classList.remove("neu-button-active");
+                this.classList.add("neu-button-inactive");
+                currentCustomColor.type = "";
+                activeButtonId = "";
+                console.log("Bouton désactivé :", this.id);
+            } else {
+                // active le button et desactive les autres
+                buttons.forEach(btn => {
+                    btn.classList.remove("neu-button-active");
+                    btn.classList.add("neu-button-inactive");
+                });
+    
+                this.classList.remove("neu-button-inactive");
+                this.classList.add("neu-button-active");
+                let toto = this.id.toString()
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    const changeBgColorSubmit = document.getElementById("changeBgColor");
-    const selectColor = document.getElementById("selectColor");
-    const demoColorContainer = document.getElementById("demo_color")
-    const paletteColor = document.getElementById("paletteColor")
-
-
-
-    console.log("coucou")
-
-    if (!changeBgColorSubmit || !selectColor || !demoColorContainer || !paletteColor) {
-        console.log(changeBgColorSubmit,selectColor,demoColorContainer,paletteColor,'ici')
+                if (this.id.toString().startsWith("custom-")) { 
+                    /* 
+                        passe par l'id pour mettre a jour currentCustomColor.type lors de la selection de la couleur
+                        palie au manque de state
+                    */
+                    activeButtonId = this.id.toString().substring(7);
+                }
+                else{
+                    // throw une erreur de selection du DOM mauvais button reference id 
+                    // voir pour un autre type de config
+                }
+                console.log("Bouton activé :", this.id);
+            }
+        });
+    });
+    
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true }); // Récupérer l'onglet actif
+    console.log(tab, "Tab Info");
+    
+    // container a refacto^ Palette
+    const demoColorContainer = document.getElementById("demo_color");
+    const paletteColor = document.getElementById("paletteColor");
+    
+    if (!demoColorContainer || !paletteColor) {
         console.warn("Certains éléments ne sont pas trouvés.");
-        return;
+        return; // a refacto en toast
     }
-    // const ids = colorsIntensity.length * colors.length
-    console.log("coucou")
-
-    let i = 1
-
+    
     colorsIntensity.forEach(currentIntensity => {
         let createDiv = document.createElement("div");
-        paletteColor.appendChild(createDiv)
-
+        paletteColor.appendChild(createDiv);
+    
         colors.forEach(currentColor => {
+            // listen chaque button de la paelette de couleur 
             let currentButton = document.createElement("button");
             currentButton.dataset.index = `Bouton-palette-color-${i}`;
-            const currentClass = `${currentColor}${currentIntensity}`
-            console.log(currentClass,'ici')
-            currentButton.classList.add(currentClass ,"demo_color_button")
-            createDiv.appendChild(currentButton)
-            
-            currentButton.addEventListener("click", () => {
-                console.log("color clicked", currentClass)
-                changeDemoColorContainer(currentClass,demoColorContainer)
+            const currentClass = `${currentColor}${currentIntensity}`;
+            currentButton.classList.add(currentClass, "demo_color_button");
+            createDiv.appendChild(currentButton);
+    
+            currentButton.addEventListener("click", async () => {
+                if (!activeButtonId) {
+                    console.warn("Aucun bouton selected");
+                    return;
+                }
+    
+                const computedStyles = window.getComputedStyle(currentButton);
+                currentCustomColor.value = computedStyles.backgroundColor;
+                currentCustomColor.type = activeButtonId; 
+    
+                console.log("currentCustomColor :", currentCustomColor);
+    
+                chrome.runtime.sendMessage({
+                    action: "changeCustomColor",
+                    newColor: currentCustomColor
+                });
             });
-            i++
+    
+            i++;
         });
-
-    });
-
-    selectColor.addEventListener("change", async ()=>{
-        console.log(selectColor.value,'tonpere')
-        if(selectColor.value){
-
-            const color = selectColor.value
-            changeDemoColorContainer(color,demoColorContainer)
-        }
-        else{
-            console.log("aucune")
-        }
-        // let [tab] = await chrome.tabs.query({ active: true, currentWindow: true }); // 
-
-        // if (tab) {
-        //     chrome.scripting.executeScript({
-        //         target: { tabId: tab.id },
-        //         function: changeDemoColorContainer,
-        //         args: [color] // Envoie la couleur choisie
-        //     });
-        // }
-    })
-
-
-    changeBgColorSubmit.addEventListener("click", async () => {
-        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true }); // 
-
-        const computedStyles = window.getComputedStyle(demoColorContainer);
-
-        const bgColor = computedStyles.backgroundColor;
-        
-        console.log(bgColor,'bgColor');
-        // const bgColor = demoColorContainer.style.backgroundColor;
-        
-        // console.log(bgColor);
-        console.log(tab,'yoooo')
-        chrome.runtime.sendMessage({ action: "changeColor", bgColor });
-
-        if (tab) {
-            chrome.scripting.executeScript({
-                target: { tabId: tab.id },
-                function: changeBackgroundColor,
-                args: [bgColor] // Envoie la couleur choisie    
-            });
-        }
     });
 });
-function changeBackgroundColor(color) {
-    const background = document.querySelector("#component_sidebar + div");
-    if (background) {
-        background.style.backgroundColor = color;
-    } else {
-        console.warn("Élément Background introuvable !");
-    }
-}
+// Fonction pour envoyer les variables CSS au background.js
+// inutilisé, façon pour forcer le css dans la page
+// function getCSSVariablesFromPage() {
+//     const colors = ["--primary", "--secondary", "--tertiary", "--textColor", "--lineColor"];
+//     const styles = getComputedStyle(document.documentElement);
+//     const lptfColors = {};
 
-function changeDemoColorContainer(bgColor,demoColorContainer){
-    console.log(bgColor,demoColorContainer)
-    if(demoColorContainer){
-        demoColorContainer.classList = ""
-        demoColorContainer.classList.add(bgColor)
+//     colors.forEach(color => {
+//         lptfColors[color] = styles.getPropertyValue(color).trim();
+//     });
 
-        console.log("iciiiii")
-        // demoColorContainer.style.height = 100%
-    }
-    else{
-        console.warn("Element demoColorContainer introuvable")
-    }
-}
+//     chrome.runtime.sendMessage({ action: "getCSSVariables", data: lptfColors });
+// }
+
+// // Fonction pour changer la couleur de fond sur la page
+// function changeBackgroundColor(color) {
+//     const background = document.querySelector("#component_sidebar + div");
+//     if (background) {
+//         background.style.backgroundColor = color;
+//     } else {
+//         console.warn("Élément Background introuvable !");
+//     }
+// }
+
+// Dans popup.js ou dans ton code de gestion des événements
+
+
