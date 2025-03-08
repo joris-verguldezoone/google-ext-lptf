@@ -15,7 +15,7 @@ Cette documentation présente une vue d'ensemble de l'organisation et du fonctio
 
 ## TODO
 
-- [ ] Intégrer le localStorage pour :
+- [x] Intégrer le localStorage pour :
   - Sauvegarder les custom colors
   - Permettre l'exportation et l'importation des custom colors
 - [ ] Créer plusieurs profils custom pour gérer différentes configurations de couleurs

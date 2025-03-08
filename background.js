@@ -17,6 +17,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 target: { tabId: tabs[0].id },
                 function: (newColor) => {
                     const type = '--' + newColor.type
+                    saveThemeColor("custom-" + newColor.type, newColor.value);
                     document.documentElement.style.setProperty(type, newColor.value);
                     console.log("Variable CSS mise à jour :" + type, "->", newColor.value);
                 },
