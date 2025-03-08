@@ -24,7 +24,10 @@ const customLptfColors = [
     "custom-inactive"
 ]
 
+
+
 document.addEventListener("DOMContentLoaded", async () => {
+    
 
     // tous les selecteurs correspondant aux custom ids 
     const buttons = customLptfColors.map(id => document.getElementById(id)).filter(btn => btn);
@@ -83,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         paletteColor.appendChild(createDiv);
     
         colors.forEach(currentColor => {
-            // listen chaque button de la paelette de couleur 
+            // listen chaque button de la palette de couleur 
             let currentButton = document.createElement("button");
             currentButton.dataset.index = `Bouton-palette-color-${i}`;
             const currentClass = `${currentColor}${currentIntensity}`;
