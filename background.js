@@ -7,10 +7,13 @@ chrome.action.onClicked.addListener((tab) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('message')
+
     if (message.action === "changeCustomColor") {
         console.log("Changement de variable CSS demandé :", message.newColor);
 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            console.log(tabs);
             if (tabs.length === 0) return;
 
             chrome.scripting.executeScript({ // script google exécuté dans la page 
@@ -24,5 +27,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 args: [message.newColor] 
             });
         });
+    }else if (message.action === "resetColors") {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            console.log(tabs);
+            if (tabs.length === 0) return;
+    
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                function: () => {    
+                    // Supprime les styles inline
+                    document.documentElement.removeAttribute("style");
+                }
+            });
+        });
     }
+    
 });

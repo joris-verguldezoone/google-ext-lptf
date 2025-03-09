@@ -6,22 +6,29 @@ const STORAGE_KEY = 'theme_intra';
 function initThemeStorage() {
     chrome.storage.local.get([STORAGE_KEY], function(result) {
         if (!result[STORAGE_KEY]) {
-            const defaultTheme = {
-                "custom-primary": "",
-                "custom-secondary": "",
-                "custom-tertiary": "",
-                "custom-fourth": "",
-                "custom-textColor": "",
-                "custom-sideBarBackgroundColor": "",
-                "custom-sideBarIconAndTextColor": "",
-                "custom-success": "",
-                "custom-error": "",
-                "custom-active": "",
-                "custom-inactive": ""
-            };
-            chrome.storage.local.set({ [STORAGE_KEY]: defaultTheme });
+            resetTheme()
         }
     });
+}
+
+/**
+ * Reset le theme
+ */
+function resetTheme(){
+    const defaultTheme = {
+        "custom-primary": "",
+        "custom-secondary": "",
+        "custom-tertiary": "",
+        "custom-fourth": "",
+        "custom-textColor": "",
+        "custom-sideBarBackgroundColor": "",
+        "custom-sideBarIconAndTextColor": "",
+        "custom-success": "",
+        "custom-error": "",
+        "custom-active": "",
+        "custom-inactive": ""
+    };
+    chrome.storage.local.set({ [STORAGE_KEY]: defaultTheme });
 }
 
 /**
@@ -42,6 +49,7 @@ function getThemeFromStorage() {
  * @param {string} value - Valeur à stocker (ex: "#FF5733")
  */
 function saveThemeColor(key, value) {
+    console.log('saveeeeeee')
     getThemeFromStorage().then(theme => {
         theme[key] = value;
         chrome.storage.local.set({ [STORAGE_KEY]: theme });

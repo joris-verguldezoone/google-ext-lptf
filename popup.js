@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     buttons.forEach(button => {
         button.addEventListener("click", function (event) {
             console.log("Bouton cliqué :", event.target.id);
-    
+            console.log(this);
             // reset le bouton actif
             if (this.classList.contains("neu-button-active")) {
                 this.classList.remove("neu-button-active");
@@ -69,18 +69,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
     
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true }); // Récupérer l'onglet actif
-    console.log(tab, "Tab Info");
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true }); 
+    
     
     // container a refacto^ Palette
-    const demoColorContainer = document.getElementById("demo_color");
+    // const demoColorContainer = document.getElementById("demo_color");
     const paletteColor = document.getElementById("paletteColor");
     
-    if (!demoColorContainer || !paletteColor) {
+    if ( !paletteColor) {
         console.warn("Certains éléments ne sont pas trouvés.");
         return; // a refacto en toast
     }
-    
+    paletteColor.style.width = '500px'
     colorsIntensity.forEach(currentIntensity => {
         let createDiv = document.createElement("div");
         paletteColor.appendChild(createDiv);
@@ -121,6 +121,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 });
+
+
+if( document.querySelector('#displayPalette') ){
+    // DOC : Display palette perso 
+    document.querySelector('#displayPalette').addEventListener('click', () => {
+        const palette = document.querySelector('#customPalette');
+        palette.style.display = palette.style.display === 'block' ? 'none' : 'block';
+    });
+
+
+    // DOC : reset du theme custom
+    document.querySelector('#resetBtn').addEventListener('click', () => {
+        chrome.runtime.sendMessage({
+            action: "resetColors",
+        });
+        buttons = document.querySelector('#custom_buttons').children
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = 'white';
+          }
+        resetTheme()
+    });
+
+}
+
+
+
+
+
+
 // Fonction pour envoyer les variables CSS au background.js
 // inutilisé, façon pour forcer le css dans la page
 // function getCSSVariablesFromPage() {
