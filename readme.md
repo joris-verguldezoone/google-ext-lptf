@@ -18,7 +18,8 @@ Cette documentation présente une vue d'ensemble de l'organisation et du fonctio
 - [x] Intégrer le localStorage pour :
   - Sauvegarder les custom colors
   - Permettre l'exportation et l'importation des custom colors
-- [] Colorer la palette custom avec les couleurs de base 
+- [ ] Afficher des messages utilisateurs pour les action de click sur les bouton de la palette custom (voir toast)
+- [ ] Colorer la palette custom avec les couleurs de base 
 - [ ] Créer plusieurs profils custom pour gérer différentes configurations de couleurs
 - [ ] Suggerer a l'utilisateurs des patterns custom cohérent pour la gestion des custom colors (ex : que les couleur allant de 50 à 300)
 - [ ] Intégrer une nouvelle librairie CSS pour la gestion des custom colors, il existe d'autre package, le premier est en flat
