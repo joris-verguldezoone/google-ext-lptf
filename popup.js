@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             currentButton.dataset.index = `Bouton-palette-color-${i}`;
             const currentClass = `${currentColor}${currentIntensity}`;
             currentButton.classList.add(currentClass, "demo_color_button");
+            currentButton.classList.add(currentClass, "button");
             createDiv.appendChild(currentButton);
     
             currentButton.addEventListener("click", async () => {

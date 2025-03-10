@@ -1,26 +1,11 @@
-/* .neu-button-inactive {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: #e0e0e0;
-    box-shadow:  29px 29px 59px #bebebe,
-                -29px -29px 59px #ffffff;
-}
-.neu-button-active {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background: #e0e0e0;
-    box-shadow: inset 29px 29px 59px #bebebe,
-                inset -29px -29px 59px #ffffff;
-} */
+
  html {
     padding: 8px;
     font-family: Arial, sans-serif;    
     text-align: center;
 }
 
-button {
+.button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -35,17 +20,17 @@ button {
     cursor: pointer;
     transition: color 0.3s, border-color 0.3s, transform 0.2s;
     background: transparent;
-  }
+}
   
-  .button:hover {
-    color: #000;
-    border-color: #000;
-    transform: scale(1.05);
-  }
-  
-  .button:active {
-    transform: scale(0.98);
-  }
+.button:hover {
+  color: #000;
+  border-color: #000;
+  transform: scale(1.05);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
   
 #customPalette{
     display: none;
@@ -89,12 +74,6 @@ button {
     transform: scale(0.95);
 }
 
-/* #demo_color{
-    padding: 10px;
-    width:480px;
-    height: 80px;
-    border: 1px black solid;
-} */
 .force-redraw {
     opacity: 0.99; /* Forcer un recalcul */
 }
