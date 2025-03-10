@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
                 this.classList.remove("neu-button-inactive");
                 this.classList.add("neu-button-active");
-                let toto = this.id.toString()
+                
 
                 if (this.id.toString().startsWith("custom-")) { 
             
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     if ( !paletteColor) {
         console.warn("Certains éléments ne sont pas trouvés.");
-        return; // a refacto en toast
+        return; // a refacto en toast,... ... c'est toi le toast !
     }
     paletteColor.style.width = '500px'
     colorsIntensity.forEach(currentIntensity => {
@@ -96,13 +96,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     
             currentButton.addEventListener("click", async () => {
                 if (!activeButtonId) {
-                    console.warn("Aucun bouton selected");
+                    console.log("Aucun bouton selected");
                     return;
                 }
                 
                 const computedStyles = window.getComputedStyle(currentButton);
                 currentCustomColor.value = computedStyles.backgroundColor;
                 currentCustomColor.type = activeButtonId;
+                console.log(currentCustomColor.value);
 
                 // experimental ajout couleur au selecot mais y'a un delais a regler
                 let activeSelector= document.getElementById('custom-'+activeButtonId)

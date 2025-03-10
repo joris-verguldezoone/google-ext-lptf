@@ -5,6 +5,12 @@
     text-align: center;
 }
 
+.neu-button-active{
+    box-shadow: inset 4px 4px 6px rgba(0, 0, 0, 0.5), 
+                inset -4px -4px 6px rgba(255, 255, 255, 0.1), 
+                0px 0px 3px rgba(0, 0, 0, 0.3);
+}
+
 .button {
     display: inline-flex;
     align-items: center;
@@ -70,9 +76,9 @@
 }
 
 /* Effet d'enfoncement au clic */
-.controls button:active {
+/* .controls button:active {
     transform: scale(0.95);
-}
+} */
 
 .force-redraw {
     opacity: 0.99; /* Forcer un recalcul */
