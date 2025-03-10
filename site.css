@@ -30,6 +30,7 @@
   
 .button:hover {
   color: #000;
+  color:whitesmoke;
   border-color: #000;
   transform: scale(1.05);
 }
@@ -70,7 +71,6 @@
 
 /* Effet au survol */
 .controls button:hover {
-    color: white;
     background: #333;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }

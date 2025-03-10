@@ -13,10 +13,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log("Changement de variable CSS demandé :", message.newColor);
 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            console.log(tabs);
+            
             if (tabs.length === 0) return;
 
-            chrome.scripting.executeScript({ // script google exécuté dans la page 
+            chrome.scripting.executeScript({ 
                 target: { tabId: tabs[0].id },
                 function: (newColor) => {
                     const type = '--' + newColor.type
@@ -35,7 +35,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 function: () => {    
-                    // Supprime les styles inline
                     document.documentElement.removeAttribute("style");
                 }
             });

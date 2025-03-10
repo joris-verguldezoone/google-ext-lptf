@@ -49,7 +49,6 @@ function getThemeFromStorage() {
  * @param {string} value - Valeur à stocker (ex: "#FF5733")
  */
 function saveThemeColor(key, value) {
-    console.log('saveeeeeee')
     getThemeFromStorage().then(theme => {
         theme[key] = value;
         chrome.storage.local.set({ [STORAGE_KEY]: theme });

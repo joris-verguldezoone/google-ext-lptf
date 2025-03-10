@@ -105,13 +105,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 currentCustomColor.type = activeButtonId;
                 console.log(currentCustomColor.value);
 
-                // experimental ajout couleur au selecot mais y'a un delais a regler
+                // experimental ajout couleur au selectot mais y'a un delais a regler
                 let activeSelector= document.getElementById('custom-'+activeButtonId)
                 activeSelector.classList = ""
+                activeSelector.removeAttribute("style")
                 activeSelector.classList = "neu-button-active "+ currentClass
-                
-
-                console.log("currentCustomColor :", currentCustomColor);
     
                 chrome.runtime.sendMessage({
                     action: "changeCustomColor",
@@ -146,36 +144,4 @@ if( document.querySelector('#displayPalette') ){
     });
 
 }
-
-
-
-
-
-
-// Fonction pour envoyer les variables CSS au background.js
-// inutilisé, façon pour forcer le css dans la page
-// function getCSSVariablesFromPage() {
-//     const colors = ["--primary", "--secondary", "--tertiary", "--textColor", "--lineColor"];
-//     const styles = getComputedStyle(document.documentElement);
-//     const lptfColors = {};
-
-//     colors.forEach(color => {
-//         lptfColors[color] = styles.getPropertyValue(color).trim();
-//     });
-
-//     chrome.runtime.sendMessage({ action: "getCSSVariables", data: lptfColors });
-// }
-
-// // Fonction pour changer la couleur de fond sur la page
-// function changeBackgroundColor(color) {
-//     const background = document.querySelector("#component_sidebar + div");
-//     if (background) {
-//         background.style.backgroundColor = color;
-//     } else {
-//         console.warn("Élément Background introuvable !");
-//     }
-// }
-
-// Dans popup.js ou dans ton code de gestion des événements
-
 
