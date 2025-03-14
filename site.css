@@ -11,7 +11,10 @@
                 0px 0px 3px rgba(0, 0, 0, 0.3);
 }
 
-.button {
+button {
+    width: inherit!important;
+}
+/* .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +29,7 @@
     cursor: pointer;
     transition: color 0.3s, border-color 0.3s, transform 0.2s;
     background: transparent;
-}
+} */
   
 .button:hover {
   color: #000;
